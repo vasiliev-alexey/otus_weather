@@ -2,7 +2,7 @@
 
 export async function currentCity() {
   try {
-    const ipGeoPosition = await fetch('http://ip-api.com/json');
+    const ipGeoPosition = await fetch('https://ipapi.co/json/');
     const data = await ipGeoPosition.json();
     return data.city;
   } catch {
