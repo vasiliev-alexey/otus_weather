@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "private": true,
+  "homepage": "https://vasiliev-alexey.github.io/otus_weather/",
   "scripts": {
     "test": "jest --coverage",
     "lint": "prettier --check . && eslint .",
@@ -12,7 +13,7 @@
     "dev": "webpack serve --host 0.0.0.0 --port 5000"
   },
   "keywords": [],
-  "author": "",
+  "author": "vasiliev-alexey",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.12.13",
