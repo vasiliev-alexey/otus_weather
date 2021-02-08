@@ -1,0 +1,42 @@
+name: Проверка для PR
+
+on: [pull_request, push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Packages
+        run: |
+          npm install
+
+      - name: Lint check
+        run: |
+          npm run lint
+
+      - name: Lint check
+        run: |
+          npm run test
+
+  pr-tests-and-coverage:
+    name: 'PR Tests and Coverage'
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Packages
+        run: |
+          npm install
+
+      - name: Build
+      - name: Test
+        run: npm run test
+
+      - name: Report Coverage
+        uses: mattallty/jest-github-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
