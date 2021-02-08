@@ -1,42 +1,16 @@
-name: Проверка для PR
-
-on: [pull_request, push]
-
+name: Generate coverage report
+on: [pull_request]
 jobs:
-  lint:
-    runs-on: ubuntu-20.04
+  jest-run:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install Packages
-        run: |
-          npm install
-
-      - name: Lint check
-        run: |
-          npm run lint
-
-      - name: Lint check
-        run: |
-          npm run test
-
-  pr-tests-and-coverage:
-    name: 'PR Tests and Coverage'
-    runs-on: ubuntu-20.04
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Packages
-        run: |
-          npm install
-
-      - name: Build
-      - name: Test
-        run: npm run test
-
-      - name: Report Coverage
+      - uses: actions/checkout@v1
+      - name: "Install dependencies"
+        run: npm install
+      - name: "Run just tests with coverage"
         uses: mattallty/jest-github-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # this is just an example, this could be any command that will trigger jest
+          test-command: "npm run test"
