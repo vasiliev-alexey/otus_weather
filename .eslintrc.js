@@ -18,6 +18,5 @@ module.exports = {
       { ignoreTrailingComments: true },
       { code: 120 },
     ],
-    'prettier/prettier': 'error',
   },
 };

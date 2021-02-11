@@ -1,7 +1,7 @@
-const key = 'cityList';
+const KEY = 'cityList';
 
 export function saveCity(city) {
-  const storageData = localStorage.getItem(key);
+  const storageData = localStorage.getItem(KEY);
   let data = JSON.parse(storageData);
   if (data === null) {
     data = [];
@@ -14,10 +14,10 @@ export function saveCity(city) {
   } else {
     return;
   }
-  localStorage.setItem(key, JSON.stringify(data));
+  localStorage.setItem(KEY, JSON.stringify(data));
 }
 
 export function getCityList() {
-  const storageData = localStorage.getItem(key);
+  const storageData = localStorage.getItem(KEY);
   return JSON.parse(storageData);
 }

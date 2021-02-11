@@ -17,8 +17,12 @@ export async function renderData(city) {
 
   const currWeather = await currentWeather(city);
 
-  if (currWeather.cod !== 200) {
-    p.innerText = 'Ошибка при определении города';
+  if (currWeather instanceof Error) {
+    p.innerText = currWeather.message;
+  } else if (currWeather.cod === '404') {
+    p.innerText = 'Город не найден';
+  } else if (currWeather.cod !== 200) {
+    p.innerText = 'Ошибка работы сервиса геолокации';
   } else {
     p.innerText = `${currWeather.name}  ${currWeather.main.temp}`;
 
@@ -33,11 +37,11 @@ export async function renderData(city) {
       '&zoom=12&size=1200x1200&key=AIzaSyAPubPBOtMn4EiVxxZ1ySt32GSX5yd1bIs';
     mapPoint.src = `${utlRoot}${currWeather.coord.lat},
   ${currWeather.coord.lon}${apiSuffix}`;
+    saveCity(city);
   }
 
   div.appendChild(p);
   mainPoint.appendChild(div);
-  saveCity(city);
 }
 
 export function renderCityList() {
@@ -54,18 +58,21 @@ export function renderCityList() {
   table.appendChild(th);
 
   const data = getCityList();
+
+  const cityTableBody = document.createElement('tbody');
+
   data.forEach((c) => {
     const trd = document.createElement('tr');
     trd.classList.add('trd-1');
     const thd = document.createElement('td');
-    thd.textContent = c;
-    trd.addEventListener('click', (event) => {
-      renderData(event.path[0].textContent);
-    });
     trd.appendChild(thd);
-    table.appendChild(trd);
+    thd.textContent = c;
+    cityTableBody.appendChild(trd);
   });
-
+  cityTableBody.addEventListener('click', (event) => {
+    renderData(event.target.outerText);
+  });
+  table.appendChild(cityTableBody);
   mainPoint.appendChild(table);
 }
 
@@ -82,9 +89,14 @@ export async function renderInitialData() {
 
   try {
     const curCity = await currentCity();
-    renderData(curCity);
+
+    if (curCity instanceof Error) {
+      p.innerText = `Ошибка при попытке установить местоположение`;
+    } else {
+      await renderData(curCity);
+    }
   } catch (e) {
-    p.innerText = `Ошибка при попытке установить местоположение${e}`;
+    p.innerText = `Ошибка при попытке установить местоположения \n${e}`;
   }
 
   div.appendChild(p);
@@ -98,24 +110,24 @@ export function renderSearchForm() {
 
   const form = document.createElement('div');
 
-  const p1 = document.createElement('p');
-  const b = document.createElement('b');
-  b.innerText = 'Введите город';
-  p1.appendChild(b);
+  const inputSearchParagraph = document.createElement('p');
+  const searchButton = document.createElement('searchButton');
+  searchButton.innerText = 'Введите город';
+  inputSearchParagraph.appendChild(searchButton);
 
-  const textArea = document.createElement('textarea');
-  textArea.classList.add('searchCity');
-  textArea.rows = 1;
-  textArea.cols = 10;
-  textArea.classList.add('ta');
+  const inputSearchCity = document.createElement('textarea');
+  inputSearchCity.classList.add('searchCity');
+  inputSearchCity.rows = 1;
+  inputSearchCity.cols = 10;
+  inputSearchCity.classList.add('ta');
 
-  textArea.addEventListener('keyup', () => {
-    const btn = document.querySelector('.btnWeather');
-    const ta = document.querySelector('.ta');
-    if (ta.value.trim().length > 0) {
-      btn.hidden = false;
+  inputSearchCity.addEventListener('keyup', () => {
+    const srchButton = document.querySelector('.btnWeather');
+    const inpArea = document.querySelector('.ta');
+    if (inpArea.value.trim().length > 0) {
+      srchButton.hidden = false;
     } else {
-      btn.hidden = true;
+      srchButton.hidden = true;
     }
   });
 
@@ -125,20 +137,20 @@ export function renderSearchForm() {
   btnShowWeather.classList.add('btnWeather');
   btnShowWeather.hidden = true;
   btnShowWeather.addEventListener('click', () => {
-    const ta = document.querySelector('.ta');
-    if (ta.value.trim().length > 0) {
-      renderData(textArea.value);
+    const inpArea = document.querySelector('.ta');
+    if (inpArea.value.trim().length > 0) {
+      renderData(inputSearchCity.value);
       renderCityList();
-      ta.value = '';
-      ta.dispatchEvent(new Event('keyup'));
+      inpArea.value = '';
+      inpArea.dispatchEvent(new Event('keyup'));
     } else {
-      b.innerText = 'Город не указан';
+      searchButton.innerText = 'Город не указан';
     }
   });
 
   const p2 = document.createElement('p');
   p2.append(btnShowWeather);
-  form.append(p1, textArea, p2);
+  form.append(inputSearchParagraph, inputSearchCity, p2);
   div.appendChild(form);
   mainPoint.appendChild(div);
 }
