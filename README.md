@@ -1,7 +1,7 @@
 # [Приложение "Прогноз погоды"](https://vasiliev-alexey.github.io/otus_weather/)
 
-![линтеры и тесты](https://github.com/vasiliev-alexey/otus_weather/workflows/PR%20Sanity%20Check/badge.svg?branch=master)
-[![codecov](https://codecov.io/gh/vasiliev-alexey/otus_weather/branch/master/graph/badge.svg)](https://codecov.io/gh/vasiliev-alexey/otus_weather)
+![линтеры и тесты](https://github.com/vasiliev-alexey/otus_weather/workflows/PR%20Sanity%20Check/badge.svg?branch=weather-1)
+[![codecov](https://codecov.io/gh/vasiliev-alexey/otus_weather/branch/weather-1/graph/badge.svg)](https://codecov.io/gh/vasiliev-alexey/otus_weather)
 
 #### Виджет:
 
