@@ -26,7 +26,7 @@ describe('Test currentCity', () => {
     );
 
     const a = await currentCity();
-    expect(a).toEqual(null);
+    expect(a.message).toEqual('Ошибка определения города по геолокации');
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
@@ -69,7 +69,7 @@ describe('Test currentWeather', () => {
       Promise.reject(new Error('API is down'))
     );
     const a = await currentWeather(dummyData);
-    expect(a).toEqual(null);
+    expect(a.message).toBe("Ошибка работы сервиса данных о погоде");
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
