@@ -1,3 +1,7 @@
+name: Run Coverage Report
+
+on: [push]
+
 jobs:
   test:
     runs-on: ubuntu-latest
