@@ -69,7 +69,7 @@ describe('Test currentWeather', () => {
       Promise.reject(new Error('API is down'))
     );
     const a = await currentWeather(dummyData);
-    expect(a.message).toBe("Ошибка работы сервиса данных о погоде");
+    expect(a.message).toBe('Ошибка работы сервиса данных о погоде');
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 });

@@ -98,7 +98,6 @@ describe('Test render List City', () => {
     renderCityList();
 
     const tr = document.querySelector('.trd-1');
-    const mainPoint = document.querySelector('.cityList');
 
     const event = new Event('click');
     event.path = ['dummy'];
@@ -107,7 +106,6 @@ describe('Test render List City', () => {
     const table = tr.parentNode;
     expect(table.children.length).toBe(2); // h + b
     expect(spy).toHaveBeenCalledTimes(1);
-    // expect(mainPoint.childNodes[0]).toEqual(table);
   });
 });
 
