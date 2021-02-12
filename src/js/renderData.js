@@ -1,7 +1,5 @@
-// eslint-disable-next-line import/extensions
-import { getCityList, saveCity } from './storage.js';
-// eslint-disable-next-line import/extensions
-import { currentCity, currentWeather } from './data.js';
+import { getCityList, saveCity } from './storage';
+import { currentCity, currentWeather } from './data';
 
 export async function renderData(city) {
   const mainPoint = document.querySelector('.main');
@@ -28,7 +26,7 @@ export async function renderData(city) {
 
     currWeather.weather.forEach((w) => {
       const img = document.createElement('img');
-      img.src = `http://openweathermap.org/img/wn/${w.icon}@2x.png`;
+      img.src = `https://openweathermap.org/img/wn/${w.icon}@2x.png`;
       div.appendChild(img);
     });
 
