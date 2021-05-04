@@ -46,6 +46,10 @@ export class TemplateEngine {
       }
     );
 
+    resultString = resultString.replace(/{{loop.index}}/g, () => {
+      return iterOption?.index.toString() ?? '';
+    });
+
     resultString = resultString.replace(
       /{{if (\w+)}}((s|\S)+){{end if}}/gm,
       (_, condToken: string, innerTemplate) => {

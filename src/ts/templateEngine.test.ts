@@ -97,4 +97,14 @@ describe('test iteration  variables', () => {
       )
     ).toBe(`Hi, ${data.NAME}. My favorite number [1234]`);
   });
+
+  test('for index for  iter', () => {
+    expect(
+      generator.template(
+        'Hi, {{NAME}}. My favorite number {{for items}}' +
+          '{{loop.index}} {{item}}\n{{end for}}',
+        data
+      )
+    ).toBe(`Hi, ${data.NAME}. My favorite number 0 1\n1 2\n2 3\n3 4\n`);
+  });
 });
