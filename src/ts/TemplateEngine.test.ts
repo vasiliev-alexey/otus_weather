@@ -1,4 +1,4 @@
-import { TemplateEngine } from './templateEngine';
+import { TemplateEngine } from './TemplateEngine';
 
 describe('specifiaction tests', () => {
   test('function spec', () => {
