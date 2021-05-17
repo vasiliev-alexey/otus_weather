@@ -17,11 +17,11 @@ class IterOption {
 }
 
 export class TemplateEngine {
-  public template(tpl: string, data: Record<string, unknown>): string {
+  public static template(tpl: string, data: Record<string, unknown>): string {
     return this.templateInternal(tpl, data);
   }
 
-  private templateInternal(
+  private  static templateInternal(
     tpl: string,
     data: any,
     iterOption?: IterOption

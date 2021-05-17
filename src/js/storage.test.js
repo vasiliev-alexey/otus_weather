@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { saveCity, getCityList } from './storage';
+import { saveCity, getCityList } from '../ts/storage';
 
 const KEY = 'cityList';
 

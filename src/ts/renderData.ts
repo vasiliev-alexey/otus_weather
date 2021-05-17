@@ -1,9 +1,9 @@
-import { getCityList, saveCity } from '../ts/storage';
+import { getCityList, saveCity } from './storage';
 import { currentCity, currentWeather } from './data';
 
-export async function renderData(city) {
-  const mainPoint = document.querySelector('.main');
-  const mapPoint = document.querySelector('.map');
+export async function renderData(city : string) {
+  const mainPoint = document.querySelector<HTMLDivElement>('.main')!;
+  const mapPoint = document.querySelector<HTMLImageElement>('.map')!;
   mainPoint.innerHTML = '';
   mapPoint.src = '';
 
@@ -24,7 +24,7 @@ export async function renderData(city) {
   } else {
     p.innerText = `${currWeather.name}  ${currWeather.main.temp}`;
 
-    currWeather.weather.forEach((w) => {
+    currWeather.weather.forEach((w : Record<string, undefined>) => {
       const img = document.createElement('img');
       img.src = `https://openweathermap.org/img/wn/${w.icon}@2x.png`;
       div.appendChild(img);
@@ -42,8 +42,8 @@ export async function renderData(city) {
   mainPoint.appendChild(div);
 }
 
-export function renderCityList() {
-  const mainPoint = document.querySelector('.cityList');
+export async function renderCityList() {
+  const mainPoint = document.querySelector('.cityList')!;
 
   mainPoint.innerHTML = '';
   const table = document.createElement('table');
@@ -57,6 +57,10 @@ export function renderCityList() {
 
   const data = getCityList();
 
+  if (!data) {
+    return;
+  }
+
   const cityTableBody = document.createElement('tbody');
 
   data.forEach((c) => {
@@ -67,15 +71,19 @@ export function renderCityList() {
     thd.textContent = c;
     cityTableBody.appendChild(trd);
   });
-  cityTableBody.addEventListener('click', (event) => {
-    renderData(event.target.outerText);
+  cityTableBody.addEventListener('click', (event ) => {
+    const eventTarget = event.target as HTMLElement;
+    if(event.target){
+      renderData(eventTarget.innerText);
+    }
+
   });
   table.appendChild(cityTableBody);
   mainPoint.appendChild(table);
 }
 
 export async function renderInitialData() {
-  const mainPoint = document.querySelector('.main');
+  const mainPoint = document.querySelector('.main')!;
 
   mainPoint.innerHTML = '';
 
@@ -102,7 +110,7 @@ export async function renderInitialData() {
 }
 
 export function renderSearchForm() {
-  const mainPoint = document.querySelector('.searchDiv');
+  const mainPoint = document.querySelector('.searchDiv')!;
   const div = document.createElement('div');
   div.classList.add('search');
 
@@ -120,22 +128,22 @@ export function renderSearchForm() {
   inputSearchCity.classList.add('ta');
 
   inputSearchCity.addEventListener('keyup', () => {
-    const srchButton = document.querySelector('.btnWeather');
-    const inpArea = document.querySelector('.ta');
+    const searchButton = document.querySelector<HTMLButtonElement>('.btnWeather')!;
+    const inpArea = document.querySelector<HTMLTextAreaElement>('.ta')!;
     if (inpArea.value.trim().length > 0) {
-      srchButton.hidden = false;
+      searchButton.hidden = false;
     } else {
-      srchButton.hidden = true;
+      searchButton.hidden = true;
     }
   });
 
   const btnShowWeather = document.createElement('button');
   btnShowWeather.textContent = 'Найти';
-  btnShowWeather.cols = 10;
+ // btnShowWeather.cols = 10;
   btnShowWeather.classList.add('btnWeather');
   btnShowWeather.hidden = true;
   btnShowWeather.addEventListener('click', () => {
-    const inpArea = document.querySelector('.ta');
+    const inpArea = document.querySelector<HTMLTextAreaElement>('.ta')!;
     if (inpArea.value.trim().length > 0) {
       renderData(inputSearchCity.value);
       renderCityList();

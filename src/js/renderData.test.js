@@ -4,8 +4,8 @@ import {
   renderCityList,
   renderInitialData,
   renderSearchForm,
-} from './renderData';
-import * as storage from './storage';
+} from '../ts/renderData';
+import * as storage from '../ts/storage';
 
 function makeMockResponse() {
   return {

@@ -2,7 +2,7 @@ import {
   renderInitialData,
   renderSearchForm,
   renderCityList,
-} from './js/renderData';
+} from './ts/renderData';
 
 renderInitialData();
 
