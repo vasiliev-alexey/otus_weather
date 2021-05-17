@@ -8,7 +8,7 @@ export async function currentCity() {
   }
 }
 
-export async function currentWeather(city : string) {
+export async function currentWeather(city: string) {
   const MAIN_PATH = 'https://api.openweathermap.org/data/2.5/weather?q=';
   const API_KEY = 'ee1b612e4275f70a8d94e61043101407';
 

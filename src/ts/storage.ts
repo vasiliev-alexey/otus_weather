@@ -1,9 +1,11 @@
+import { WeatherState } from './Domain';
+
 const KEY = 'cityList';
 
-export function saveCity(city : string) {
+export function saveCity(city: string) {
   const storageData = localStorage.getItem(KEY);
 
-  if(storageData === null) {
+  if (storageData === null) {
     return;
   }
 
@@ -22,12 +24,19 @@ export function saveCity(city : string) {
   localStorage.setItem(KEY, JSON.stringify(data));
 }
 
-export function getCityList() : string[] | undefined {
+export function getCityList(): WeatherState | undefined {
   const storageData = localStorage.getItem(KEY);
-  if(storageData === null) {
+  if (storageData === null) {
     return;
   }
 
+  const data: string[] = JSON.parse(storageData);
 
-  return JSON.parse(storageData);
+  const citiArray = data
+    .filter((c) => c !== null)
+    .map((namecity) => {
+      return { name: namecity };
+    });
+
+  return { cities: citiArray };
 }

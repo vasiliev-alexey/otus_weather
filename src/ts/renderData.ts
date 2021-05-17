@@ -1,7 +1,8 @@
 import { getCityList, saveCity } from './storage';
 import { currentCity, currentWeather } from './data';
+import { WeatherState } from './Domain';
 
-export async function renderData(city : string) {
+export async function renderData(city: string) {
   const mainPoint = document.querySelector<HTMLDivElement>('.main')!;
   const mapPoint = document.querySelector<HTMLImageElement>('.map')!;
   mainPoint.innerHTML = '';
@@ -24,7 +25,7 @@ export async function renderData(city : string) {
   } else {
     p.innerText = `${currWeather.name}  ${currWeather.main.temp}`;
 
-    currWeather.weather.forEach((w : Record<string, undefined>) => {
+    currWeather.weather.forEach((w: Record<string, undefined>) => {
       const img = document.createElement('img');
       img.src = `https://openweathermap.org/img/wn/${w.icon}@2x.png`;
       div.appendChild(img);
@@ -55,7 +56,7 @@ export async function renderCityList() {
   tr.appendChild(th);
   table.appendChild(th);
 
-  const data = getCityList();
+  const data: WeatherState | undefined = getCityList();
 
   if (!data) {
     return;
@@ -63,20 +64,19 @@ export async function renderCityList() {
 
   const cityTableBody = document.createElement('tbody');
 
-  data.forEach((c) => {
+  data.cities.forEach((c) => {
     const trd = document.createElement('tr');
     trd.classList.add('trd-1');
     const thd = document.createElement('td');
     trd.appendChild(thd);
-    thd.textContent = c;
+    thd.textContent = c.name;
     cityTableBody.appendChild(trd);
   });
-  cityTableBody.addEventListener('click', (event ) => {
+  cityTableBody.addEventListener('click', (event) => {
     const eventTarget = event.target as HTMLElement;
-    if(event.target){
+    if (event.target) {
       renderData(eventTarget.innerText);
     }
-
   });
   table.appendChild(cityTableBody);
   mainPoint.appendChild(table);
@@ -128,7 +128,8 @@ export function renderSearchForm() {
   inputSearchCity.classList.add('ta');
 
   inputSearchCity.addEventListener('keyup', () => {
-    const searchButton = document.querySelector<HTMLButtonElement>('.btnWeather')!;
+    const searchButton =
+      document.querySelector<HTMLButtonElement>('.btnWeather')!;
     const inpArea = document.querySelector<HTMLTextAreaElement>('.ta')!;
     if (inpArea.value.trim().length > 0) {
       searchButton.hidden = false;
@@ -139,7 +140,7 @@ export function renderSearchForm() {
 
   const btnShowWeather = document.createElement('button');
   btnShowWeather.textContent = 'Найти';
- // btnShowWeather.cols = 10;
+  // btnShowWeather.cols = 10;
   btnShowWeather.classList.add('btnWeather');
   btnShowWeather.hidden = true;
   btnShowWeather.addEventListener('click', () => {
