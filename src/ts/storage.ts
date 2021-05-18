@@ -1,8 +1,8 @@
-import { WeatherState } from './Domain';
+import { CityState } from './Domain';
 
 const KEY = 'cityList';
 
-export function saveCity(city: string) {
+export function saveCity(city: string): void {
   const storageData = localStorage.getItem(KEY);
 
   if (storageData === null) {
@@ -24,7 +24,7 @@ export function saveCity(city: string) {
   localStorage.setItem(KEY, JSON.stringify(data));
 }
 
-export function getCityList(): WeatherState | undefined {
+export function getCityList(): CityState | undefined {
   const storageData = localStorage.getItem(KEY);
   if (storageData === null) {
     return;

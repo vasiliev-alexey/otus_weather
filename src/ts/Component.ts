@@ -1,3 +1,5 @@
+import { TemplateEngine } from './TemplateEngine';
+
 export type State = Record<string, unknown>;
 
 export abstract class Component<State> {
@@ -7,7 +9,10 @@ export abstract class Component<State> {
   /**
    * Список событий для подписок на элементы
    */
-  protected events?: {
+
+  protected templateEngine: TemplateEngine;
+
+  public events?: {
     [key: string]: (ev: Event) => void;
   };
   private el: HTMLElement;
@@ -15,6 +20,7 @@ export abstract class Component<State> {
 
   constructor(el: HTMLElement, initialState: Partial<State> = {}) {
     this.el = el;
+    this.templateEngine = new TemplateEngine();
     setTimeout(() => {
       this.setState(initialState);
       this.subscribeToEvents();
@@ -26,9 +32,11 @@ export abstract class Component<State> {
    *
    */
   subscribeToEvents(): void {
+    console.log('susbs');
     if (!this.events) {
       return;
     }
+    console.log('susbs111', this.events);
     Object.entries(this.events).forEach((el) => {
       const arr = el[0].split('@');
       console.log(arr[0], arr[1]);

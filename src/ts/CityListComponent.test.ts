@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { CityListComponent } from './CityListComponent';
-import { WeatherState } from './Domain';
+import { CityState } from './Domain';
 
 const sleep = (x: number) => new Promise((resolve) => setTimeout(resolve, x));
 
@@ -24,7 +24,7 @@ describe('test constructor spec', () => {
   });
 
   it('component renderList', async () => {
-    const city: WeatherState = {
+    const city: CityState = {
       cities: citiList,
     };
 

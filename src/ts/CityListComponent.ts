@@ -1,15 +1,31 @@
-import { Component, State } from './Component';
-import { TemplateEngine } from './TemplateEngine';
-import { WeatherState } from './Domain';
+import { Component } from './Component';
+import { CityState } from './Domain';
+import { getCityList } from './storage';
+import { renderData } from './renderData';
 
-export class CityListComponent extends Component<WeatherState> {
-  private templateEngine = new TemplateEngine();
+export class CityListComponent extends Component<CityState> {
+  public async onClick(event: Event): Promise<void> {
+    const eventTarget = event.target as HTMLElement;
+    if (event.target) {
+      await renderData(eventTarget.innerText);
+    }
+    return;
+  }
+  events = {
+    'click@.list': this.onClick,
+  };
+
+  async onMount(el: HTMLElement): Promise<void> {
+    super.onMount(el);
+    const data = await getCityList();
+    if (data) {
+      this.state = data;
+    }
+  }
 
   render(): string {
     return this.templateEngine.template(
-      '<table class="cityList3"><th><tbody>' +
-        '{{for cities}}<tr><td>{{name}}</td></tr>{{end for}}' +
-        '</tbody></th></table>',
+      '{{for cities}}<tr><td>{{name}}</td></tr>{{end for}}',
       this.state
     );
   }
