@@ -69,7 +69,7 @@ export async function renderInitialData(): Promise<void> {
 }
 
 export function renderSearchForm(): void {
-  const mainPoint = document.querySelector('.searchDiv')!; // eslint-disable-line @typescript-eslint/no-non-null-assertion
+  const mainPoint = document.querySelector('.searchDiv')!;
   const div = document.createElement('div');
   div.classList.add('search');
 
@@ -88,8 +88,8 @@ export function renderSearchForm(): void {
 
   inputSearchCity.addEventListener('keyup', () => {
     const searchButton =
-      document.querySelector<HTMLButtonElement>('.btnWeather')!; // eslint-disable-line @typescript-eslint/no-non-null-assertion
-    const inpArea = document.querySelector<HTMLTextAreaElement>('.ta')!; // eslint-disable-line @typescript-eslint/no-non-null-assertion
+      document.querySelector<HTMLButtonElement>('.btnWeather')!;
+    const inpArea = document.querySelector<HTMLTextAreaElement>('.ta')!;
     if (inpArea.value.trim().length > 0) {
       searchButton.hidden = false;
     } else {

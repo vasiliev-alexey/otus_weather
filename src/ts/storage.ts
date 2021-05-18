@@ -5,11 +5,14 @@ const KEY = 'cityList';
 export function saveCity(city: string): void {
   const storageData = localStorage.getItem(KEY);
 
-  if (storageData === null) {
-    return;
+  // if (!storageData) {
+  //   return;
+  // }
+  let data = [];
+  if (storageData !== null && storageData !== undefined) {
+    data = JSON.parse(storageData);
   }
 
-  let data = JSON.parse(storageData);
   if (data === null) {
     data = [];
   }
