@@ -1,45 +1,12 @@
-import { getCityList, saveCity } from './storage';
-import { currentCity, currentWeather } from './data';
-import { MapState, MetricState } from './Domain';
+import { getCityList } from './storage';
+import { currentCity } from './data';
+import { MetricState } from './Domain';
 import { CityListComponent } from './CityListComponent';
-import { MetricComponent } from './MetricComponent';
-import { MapComponent } from './MapComponent';
+import { renderData } from './render2';
 
 const cityListComponent = new CityListComponent(
   document.querySelector<HTMLDivElement>('.list')! // eslint-disable-line @typescript-eslint/no-non-null-assertion
 );
-const metricComponent = new MetricComponent(
-  document.querySelector<HTMLDivElement>('.main')! // eslint-disable-line @typescript-eslint/no-non-null-assertion
-);
-const mapComponent = new MapComponent(
-  document.querySelector<HTMLDivElement>('.map')! // eslint-disable-line @typescript-eslint/no-non-null-assertion
-);
-
-export async function renderData(city: string): Promise<void> {
-  const data: MetricState = {};
-  const cord: MapState = {};
-  const currWeather = await currentWeather(city);
-
-  if (currWeather instanceof Error) {
-    data.message = currWeather.message;
-  } else if (currWeather.cod === 404) {
-    data.message = 'Город не найден';
-  } else if (currWeather.cod !== 200) {
-    data.message = 'Ошибка работы сервиса геолокации';
-  } else {
-    data.message = `${currWeather.name}  ${currWeather.main.temp}`;
-    data.weathers = currWeather?.weather.map(
-      (el: Record<string, undefined>) => {
-        return { icon: String(el.icon) };
-      }
-    );
-    cord.lon = currWeather.coord.lon;
-    cord.lat = currWeather.coord.lat;
-    saveCity(city);
-  }
-  metricComponent.setState(data);
-  mapComponent.setState(cord);
-}
 
 export async function renderCityList(): Promise<void> {
   const data = getCityList();

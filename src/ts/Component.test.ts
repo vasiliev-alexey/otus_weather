@@ -22,7 +22,7 @@ describe('test constructor spec', () => {
     expect(new DummyComponent(dummyElement)).toBeInstanceOf(DummyComponent);
   });
 
-  it('constructor should  render data  in html element', () => {
+  it('constructor should  render data  in html element', async () => {
     const random = Math.random() * Math.PI + 100 + 1;
 
     class DummyComponent extends Component<{ random: number }> {
@@ -33,6 +33,7 @@ describe('test constructor spec', () => {
 
     const dummyComponent = new DummyComponent(dummyElement, { random: random });
     expect(dummyComponent).toBeInstanceOf(Component);
+    await sleep(10);
     expect(dummyElement.innerHTML).toEqual(`Simple data ${random}`);
   });
 
@@ -49,14 +50,12 @@ describe('test constructor spec', () => {
       };
 
       render() {
-        console.log(this);
         return `simple data ${this.state.random2}, ${this.state.random}`;
       }
     }
 
     new TestComponent(dummyElement, { random2 });
     await sleep(10);
-    console.log(dummyElement.innerHTML);
     expect(dummyElement.innerHTML).toBe(`simple data ${random2}, ${random}`);
   });
 
@@ -73,7 +72,6 @@ describe('test constructor spec', () => {
       };
 
       render() {
-        console.log(this);
         return `Simple test, ${this.state.random2}, ${this.state.random}`;
       }
     }

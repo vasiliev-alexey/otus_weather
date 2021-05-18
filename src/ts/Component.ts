@@ -32,18 +32,15 @@ export abstract class Component<State> {
    *
    */
   subscribeToEvents(): void {
-    console.log('susbs');
     if (!this.events) {
       return;
     }
-    console.log('susbs111', this.events);
+
     Object.entries(this.events).forEach((el) => {
       const arr = el[0].split('@');
-      console.log(arr[0], arr[1]);
       const element = document.querySelectorAll(arr[1]);
       element.forEach((child) => {
         child.addEventListener(arr[0], el[1]);
-        console.log(child, arr[0], el[1]);
       });
     });
   }

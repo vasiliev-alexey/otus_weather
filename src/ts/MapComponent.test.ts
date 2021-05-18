@@ -1,6 +1,5 @@
 import { expect } from '@jest/globals';
-import { CityListComponent } from './CityListComponent';
-import { CityState } from './Domain';
+import { MapComponent } from './MapComponent';
 
 const sleep = (x: number) => new Promise((resolve) => setTimeout(resolve, x));
 
@@ -13,9 +12,9 @@ describe('test constructor spec', () => {
   beforeEach(() => {
     dummyElement = document.createElement('div');
     mapElement = document.createElement('div');
-    mapElement.classList.add('map')
+    mapElement.classList.add('map');
     mainElement = document.createElement('div');
-    mainElement.classList.add('main')
+    mainElement.classList.add('main');
 
     document.body.append(mainElement, mapElement);
 
@@ -25,23 +24,20 @@ describe('test constructor spec', () => {
   });
 
   it('constructor should be function', async () => {
-    expect(CityListComponent).toBeInstanceOf(Function);
-    await  sleep(10)
-    expect(new CityListComponent(dummyElement)).toBeInstanceOf(
-      CityListComponent
-    );
+    expect(MapComponent).toBeInstanceOf(Function);
+    await sleep(10);
+    expect(new MapComponent(dummyElement)).toBeInstanceOf(MapComponent);
   });
 
-  it('component renderList',   async () => {
-    const city: CityState = {
-      cities: citiList,
-    };
-
-    const component = new CityListComponent(dummyElement, city);
-    await sleep(10)
+  it('component render', async () => {
+    const component = new MapComponent(dummyElement, { lat: 1, lon: 1 });
+    await sleep(100);
     expect(component.render()).toBe(
-      '<tr><td>city0</td></tr><tr>' +
-      '<td>city1</td></tr><tr><td>city2</td></tr>'
+      '<div style="text-align: center"><img class="map" \n' +
+        '      src="https://maps.googleapis.com/maps/api/staticmap?center' +
+        '=1,1&zoom=12&size=1200x1200' +
+        '&key=AIzaSyAoHdEh_Eb_8xXLNi9802SEyZJj6epr04w">\n' +
+        '</div>'
     );
   });
 });

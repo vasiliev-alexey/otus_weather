@@ -1,12 +1,13 @@
 import { Component } from './Component';
 import { CityState } from './Domain';
 import { getCityList } from './storage';
-import { renderData } from './renderData';
+import { renderData } from './render2';
 
 export class CityListComponent extends Component<CityState> {
   public async onClick(event: Event): Promise<void> {
     const eventTarget = event.target as HTMLElement;
     if (event.target) {
+      console.log(eventTarget.innerText);
       await renderData(eventTarget.innerText);
     }
     return;

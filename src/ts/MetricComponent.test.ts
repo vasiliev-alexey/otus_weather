@@ -1,7 +1,5 @@
 import { expect } from '@jest/globals';
-import { CityListComponent } from './CityListComponent';
-import { CityState } from './Domain';
-import { MapComponent } from './MapComponent';
+import { MetricComponent } from './MetricComponent';
 
 const sleep = (x: number) => new Promise((resolve) => setTimeout(resolve, x));
 
@@ -14,9 +12,9 @@ describe('test constructor spec', () => {
   beforeEach(() => {
     dummyElement = document.createElement('div');
     mapElement = document.createElement('div');
-    mapElement.classList.add('map')
+    mapElement.classList.add('map');
     mainElement = document.createElement('div');
-    mainElement.classList.add('main')
+    mainElement.classList.add('main');
 
     document.body.append(mainElement, mapElement);
 
@@ -26,21 +24,19 @@ describe('test constructor spec', () => {
   });
 
   it('constructor should be function', async () => {
-    expect(MapComponent).toBeInstanceOf(Function);
-    await  sleep(10)
-    expect(new MapComponent(dummyElement)).toBeInstanceOf(
-      MapComponent
-    );
+    expect(MetricComponent).toBeInstanceOf(Function);
+    await sleep(10);
+    expect(new MetricComponent(dummyElement)).toBeInstanceOf(MetricComponent);
   });
 
-  it('component render',   async () => {
-
-    const component = new MapComponent(dummyElement, { lat : 1, lon:1} );
-    await sleep(10)
+  it('component render', async () => {
+    const component = new MetricComponent(dummyElement);
+    await sleep(10);
+    component.setState({ message: 'message' });
+    await sleep(10);
     expect(component.render()).toBe(
-      '<div style="text-align: center"><img class="map" \n' +
-      '      src="https://maps.googleapis.com/maps/api/staticmap?center=1,1&zoom=12&size=1200x1200&key=AIzaSyAoHdEh_Eb_8xXLNi9802SEyZJj6epr04w">\n' +
-      '</div>'
+      '<div class="main"><div class="icon">><p class="cityLabel">message</p>' +
+        '</div><div class="icon"><p class="label_city"></p></div></div>'
     );
   });
 });
