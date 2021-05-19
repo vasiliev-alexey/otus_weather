@@ -1,19 +1,17 @@
 import { currentWeather, currentCity } from './data';
+import fetchMock from 'jest-fetch-mock';
+import { expect } from '@jest/globals';
 
-global.fetch = jest.fn();
+global.fetch = fetchMock;
 
 describe('Test currentCity', () => {
   beforeEach(() => {
-    fetch.mockClear();
+    fetchMock.resetMocks();
   });
 
   test('should return fake data', async () => {
     const dummyData = 'test city';
-    fetch.mockImplementationOnce(() =>
-      Promise.resolve({
-        json: () => Promise.resolve({ city: dummyData }),
-      })
-    );
+    fetchMock.mockResponseOnce(JSON.stringify({ city: dummyData }));
 
     const a = await currentCity();
     expect(a).toEqual(dummyData);
@@ -21,19 +19,23 @@ describe('Test currentCity', () => {
   });
 
   test('should return trouble data', async () => {
-    fetch.mockImplementationOnce(() =>
+    fetchMock.mockImplementationOnce(() =>
       Promise.reject(new Error('API is down'))
     );
 
     const a = await currentCity();
-    expect(a.message).toEqual('Ошибка определения города по геолокации');
+
+    expect(a).toBeInstanceOf(Error);
+    const err = a as Error;
+
+    expect(err.message).toEqual('Ошибка определения города по геолокации');
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
 
 describe('Test currentWeather', () => {
   beforeEach(() => {
-    fetch.mockClear();
+    fetchMock.mockClear();
   });
 
   test('should return fake data', async () => {
@@ -52,11 +54,7 @@ describe('Test currentWeather', () => {
       name: 'TestCity',
       cod: 200,
     };
-    fetch.mockImplementationOnce(() =>
-      Promise.resolve({
-        json: () => Promise.resolve(mockResponce),
-      })
-    );
+    fetchMock.mockResponseOnce(JSON.stringify(mockResponce));
 
     const a = await currentWeather(dummyData);
     expect(a).toEqual(mockResponce);
@@ -65,11 +63,9 @@ describe('Test currentWeather', () => {
 
   test('should not  return for exception', async () => {
     const dummyData = 'test city';
-    fetch(() =>
-      Promise.reject(new Error('API is down'))
-    );
+    fetchMock.mockResponseOnce(() => Promise.reject(new Error('API is down')));
     const a = await currentWeather(dummyData);
-    expect(a).toBeInstanceOf(Error)
+    expect(a).toBeInstanceOf(Error);
     const b = a as Error;
     expect(b.message).toBe('Ошибка работы сервиса данных о погоде');
     expect(fetch).toHaveBeenCalledTimes(1);
