@@ -1,5 +1,5 @@
 import { Component } from './Component';
-import { MetricState } from './Domain';
+import { MetricState } from '../Domain';
 
 export class MetricComponent extends Component<MetricState> {
   render(): string {
