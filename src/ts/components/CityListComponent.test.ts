@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { CityListComponent } from './CityListComponent';
-import { CityState } from './Domain';
+import { CityState } from '../libs/Domain';
 
 const sleep = (x: number) => new Promise((resolve) => setTimeout(resolve, x));
 

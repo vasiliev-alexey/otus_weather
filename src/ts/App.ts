@@ -2,7 +2,7 @@ import { getCityList } from './libs/storage';
 import { currentCity } from './libs/data';
 import { MetricState } from './libs/Domain';
 import { CityListComponent } from './components/CityListComponent';
-import { renderData } from './render2';
+import { renderData } from './renderData';
 import { SearchComponent } from './components/SearchComponent';
 
 const cityListComponent = new CityListComponent(

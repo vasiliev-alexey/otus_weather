@@ -1,7 +1,7 @@
 import { Component } from './Component';
-import { CityState } from './Domain';
-import { getCityList } from './storage';
-import { renderData } from './render2';
+import { CityState } from '../libs/Domain';
+import { getCityList } from '../libs/storage';
+import { renderData } from '../renderData';
 
 export class CityListComponent extends Component<CityState> {
   public async onClick(event: Event): Promise<void> {

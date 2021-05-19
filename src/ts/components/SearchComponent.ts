@@ -1,6 +1,6 @@
 import { Component } from './Component';
-import { renderData } from '../render2';
-import { renderCityList } from '../renderData';
+import { renderData } from '../renderData';
+import { renderCityList } from '../App';
 
 export class SearchComponent extends Component<any> {
   events = {
