@@ -1,6 +1,12 @@
 import { TemplateEngine } from './TemplateEngine';
 
-describe('specifiaction tests', () => {
+let generator: TemplateEngine;
+
+beforeEach(() => {
+  generator = new TemplateEngine();
+});
+
+describe('specification tests', () => {
   test('function spec', () => {
     expect(TemplateEngine).toBeInstanceOf(Function);
     expect(new TemplateEngine()).toBeInstanceOf(TemplateEngine);
@@ -8,14 +14,9 @@ describe('specifiaction tests', () => {
 });
 
 describe('test replacing  placeholders', () => {
-  let generator: TemplateEngine;
   const data: { NAME: string } = {
     NAME: `${Math.random()}`,
   };
-
-  beforeEach(() => {
-    generator = new TemplateEngine();
-  });
 
   test('replace placeholders for object', () => {
     expect(generator.template('Hi, {{NAME}}', data)).toBe(`Hi, ${data.NAME}`);
@@ -38,15 +39,10 @@ describe('test replacing  placeholders', () => {
 });
 
 describe('test loop directive', () => {
-  let generator: TemplateEngine;
   const data: { NAME: string; items: { item: number }[] } = {
     NAME: `${Math.random()}`,
     items: [{ item: 1 }, { item: 2 }, { item: 3 }, { item: 4 }],
   };
-
-  beforeEach(() => {
-    generator = new TemplateEngine();
-  });
 
   test('replace placeholders for object', () => {
     expect(
@@ -60,15 +56,10 @@ describe('test loop directive', () => {
 });
 
 describe('test condition rules', () => {
-  let generator: TemplateEngine;
   const data: { NAME: string; items: { item: number }[] } = {
     NAME: `${Math.random()}`,
     items: [{ item: 1 }, { item: 2 }, { item: 3 }, { item: 4 }],
   };
-
-  beforeEach(() => {
-    generator = new TemplateEngine();
-  });
 
   test('condition test render', () => {
     expect(
@@ -78,15 +69,10 @@ describe('test condition rules', () => {
 });
 
 describe('test iteration  variables', () => {
-  let generator: TemplateEngine;
   const data: { NAME: string; items: { item: number }[] } = {
     NAME: `${Math.random()}`,
     items: [{ item: 1 }, { item: 2 }, { item: 3 }, { item: 4 }],
   };
-
-  beforeEach(() => {
-    generator = new TemplateEngine();
-  });
 
   test('for iter object', () => {
     expect(

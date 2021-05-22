@@ -1,7 +1,6 @@
 import { expect, jest } from '@jest/globals';
 import { Component } from './Component';
-
-const sleep = (x: number) => new Promise((resolve) => setTimeout(resolve, x));
+import { sleep } from '../libs/utils';
 
 describe('test constructor spec', () => {
   let dummyElement: HTMLElement;
@@ -85,7 +84,7 @@ describe('test constructor spec', () => {
   });
 });
 
-describe('test event bind', () => {
+describe('test  Component has event', () => {
   let dummyElement: HTMLElement;
 
   beforeEach(() => {

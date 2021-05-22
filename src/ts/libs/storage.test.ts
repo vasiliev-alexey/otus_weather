@@ -1,12 +1,25 @@
 import { getCityList, saveCity } from './storage';
 
+let originalLocalStorage: Storage;
+
 const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   clear: jest.fn(),
 };
 
-Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+beforeAll(() => {
+  originalLocalStorage = window.localStorage;
+  Object.defineProperty(window, 'localStorage', {
+    value: localStorageMock,
+    configurable: true,
+    writable: true,
+  });
+});
+
+afterAll(() => {
+  (window as any).localStorage = originalLocalStorage;
+});
 
 const KEY = 'cityList';
 

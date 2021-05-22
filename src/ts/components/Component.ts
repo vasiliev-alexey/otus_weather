@@ -4,13 +4,10 @@ export type State = Record<string, unknown>;
 
 export abstract class Component<State> {
   public state: State = {} as State;
-  /**
-   */
+  protected templateEngine: TemplateEngine;
   /**
    * Список событий для подписок на элементы
    */
-
-  protected templateEngine: TemplateEngine;
 
   public events?: {
     [key: string]: (ev: Event) => void;

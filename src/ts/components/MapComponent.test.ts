@@ -1,7 +1,7 @@
 import { expect } from '@jest/globals';
 import { MapComponent } from './MapComponent';
-
-const sleep = (x: number) => new Promise((resolve) => setTimeout(resolve, x));
+import { MAP_API_KEY, MAP_URL } from './Constants';
+import { sleep } from '../libs/utils';
 
 describe('test constructor spec', () => {
   let dummyElement: HTMLDivElement;
@@ -32,12 +32,9 @@ describe('test constructor spec', () => {
   it('component render', async () => {
     const component = new MapComponent(dummyElement, { lat: 1, lon: 1 });
     await sleep(100);
-    expect(component.render()).toBe(
-      '<div style="text-align: center"><img class="map" \n' +
-        '      src="https://maps.googleapis.com/maps/api/staticmap?center' +
-        '=1,1&zoom=12&size=1200x1200' +
-        '&key=AIzaSyAoHdEh_Eb_8xXLNi9802SEyZJj6epr04w">\n' +
-        '</div>'
-    );
+
+    const expectedString = `<div style="text-align: center"><img class="map" src="${MAP_URL}?center=1,1
+         &zoom=12&size=1200x1200&key=${MAP_API_KEY}></div>`;
+    expect(component.render()).toEqual(expectedString);
   });
 });

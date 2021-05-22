@@ -37,7 +37,7 @@ export class TemplateEngine {
                 if (iterOption === undefined) {
                   iterOption = new IterOption(arr.length);
                 } else {
-                  iterOption?.increment();
+                  iterOption.increment();
                 }
                 return this.templateInternal(internalTemplate, el, iterOption);
               })

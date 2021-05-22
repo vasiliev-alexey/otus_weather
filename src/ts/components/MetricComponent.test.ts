@@ -1,7 +1,6 @@
 import { expect } from '@jest/globals';
 import { MetricComponent } from './MetricComponent';
-
-const sleep = (x: number) => new Promise((resolve) => setTimeout(resolve, x));
+import { sleep } from '../libs/utils';
 
 describe('test constructor spec', () => {
   let dummyElement: HTMLDivElement;

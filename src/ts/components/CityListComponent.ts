@@ -20,7 +20,7 @@ export class CityListComponent extends Component<CityState> {
     super.onMount(el);
     const data = await getCityList();
     if (data) {
-      this.state = data;
+      this.setState(data);
     }
   }
 

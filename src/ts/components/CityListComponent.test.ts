@@ -1,8 +1,7 @@
-import { expect } from '@jest/globals';
 import { CityListComponent } from './CityListComponent';
 import { CityState } from '../libs/Domain';
 
-const sleep = (x: number) => new Promise((resolve) => setTimeout(resolve, x));
+import { sleep } from '../libs/utils';
 
 describe('test constructor spec', () => {
   let dummyElement: HTMLDivElement;
@@ -11,11 +10,11 @@ describe('test constructor spec', () => {
   let citiList: { name: string }[] = [];
 
   beforeEach(() => {
-    dummyElement = document.createElement('div');
     mapElement = document.createElement('div');
     mapElement.classList.add('map');
     mainElement = document.createElement('div');
     mainElement.classList.add('main');
+    dummyElement = document.createElement('div');
 
     document.body.append(mainElement, mapElement);
     citiList = [];
@@ -26,7 +25,6 @@ describe('test constructor spec', () => {
 
   it('constructor should be function', async () => {
     expect(CityListComponent).toBeInstanceOf(Function);
-    await sleep(10);
     expect(new CityListComponent(dummyElement)).toBeInstanceOf(
       CityListComponent
     );

@@ -13,8 +13,8 @@ describe('Test currentCity', () => {
     const dummyData = 'test city';
     fetchMock.mockResponseOnce(JSON.stringify({ city: dummyData }));
 
-    const a = await currentCity();
-    expect(a).toEqual(dummyData);
+    const curCity = await currentCity();
+    expect(curCity).toEqual(dummyData);
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
@@ -23,10 +23,10 @@ describe('Test currentCity', () => {
       Promise.reject(new Error('API is down'))
     );
 
-    const a = await currentCity();
+    const curCity = await currentCity();
 
-    expect(a).toBeInstanceOf(Error);
-    const err = a as Error;
+    expect(curCity).toBeInstanceOf(Error);
+    const err = curCity as Error;
 
     expect(err.message).toEqual('Ошибка определения города по геолокации');
     expect(fetch).toHaveBeenCalledTimes(1);
@@ -56,17 +56,17 @@ describe('Test currentWeather', () => {
     };
     fetchMock.mockResponseOnce(JSON.stringify(mockResponce));
 
-    const a = await currentWeather(dummyData);
-    expect(a).toEqual(mockResponce);
+    const curWeather = await currentWeather(dummyData);
+    expect(curWeather).toEqual(mockResponce);
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
   test('should not  return for exception', async () => {
     const dummyData = 'test city';
     fetchMock.mockResponseOnce(() => Promise.reject(new Error('API is down')));
-    const a = await currentWeather(dummyData);
-    expect(a).toBeInstanceOf(Error);
-    const b = a as Error;
+    const curWeather = await currentWeather(dummyData);
+    expect(curWeather).toBeInstanceOf(Error);
+    const b = curWeather as Error;
     expect(b.message).toBe('Ошибка работы сервиса данных о погоде');
     expect(fetch).toHaveBeenCalledTimes(1);
   });

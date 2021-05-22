@@ -25,7 +25,7 @@ export class SearchComponent extends Component<any> {
   render(): string {
     return (
       '<div class="search"><div><p class=\'searchbutton\'>Введите город</p>\n' +
-      '<textarea class="searchCity ta" rows="1" cols="10"></textarea><p>\n' +
+      '<input type="text" class="searchCity ta" rows="1" cols="10"></input><p>\n' +
       '<button class="btnWeather" >Найти</button></p></div></div>'
     );
   }
