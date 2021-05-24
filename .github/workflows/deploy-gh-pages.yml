@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - 'weather-*'
+      - template_engine
 
 jobs:
   deploy-to-gh-pages:

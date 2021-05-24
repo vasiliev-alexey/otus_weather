@@ -1,6 +1,9 @@
-export async function currentCity() {
+import { WeatherResponse } from './Domain';
+import { API_IP_URL, API_KEY, MAIN_PATH } from '../components/Constants';
+
+export async function currentCity(): Promise<string | Error> {
   try {
-    const ipGeoPosition = await fetch('https://ipapi.co/json/');
+    const ipGeoPosition = await fetch(`${API_IP_URL}`);
     const data = await ipGeoPosition.json();
     return data.city;
   } catch {
@@ -8,10 +11,9 @@ export async function currentCity() {
   }
 }
 
-export async function currentWeather(city) {
-  const MAIN_PATH = 'https://api.openweathermap.org/data/2.5/weather?q=';
-  const API_KEY = 'ee1b612e4275f70a8d94e61043101407';
-
+export async function currentWeather(
+  city: string
+): Promise<WeatherResponse | Error> {
   try {
     const weatherService = await fetch(
       `${MAIN_PATH}${city}&appid=${API_KEY}&units=metric&lang=ru`
